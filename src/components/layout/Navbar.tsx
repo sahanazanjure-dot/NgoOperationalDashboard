@@ -12,7 +12,8 @@ import {
   Calendar,
   Filter,
   CheckCircle,
-  FileSpreadsheet
+  FileSpreadsheet,
+  Globe
 } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 import { exportConsolidatedWorkbook } from '../../utils/excelExport';
@@ -25,8 +26,6 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ onToggleMobileMenu, onNavigateTab }) => {
   const {
     currentUser,
-    switchUserRole,
-    availableUsers,
     organization,
     projects,
     beneficiaries,
@@ -45,20 +44,15 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggleMobileMenu, onNavigateTa
     setGlobalSearchQuery
   } = useApp();
 
-  const [roleDropdownOpen, setRoleDropdownOpen] = useState(false);
   const [alertsOpen, setAlertsOpen] = useState(false);
   const [searchFocused, setSearchFocused] = useState(false);
 
-  const roleRef = useRef<HTMLDivElement>(null);
   const alertsRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLDivElement>(null);
 
   // Close dropdowns on outside click
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (roleRef.current && !roleRef.current.contains(event.target as Node)) {
-        setRoleDropdownOpen(false);
-      }
       if (alertsRef.current && !alertsRef.current.contains(event.target as Node)) {
         setAlertsOpen(false);
       }
@@ -320,68 +314,25 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggleMobileMenu, onNavigateTa
           )}
         </div>
 
-        {/* Role Switcher Dropdown */}
-        <div ref={roleRef} className="relative">
-          <button
-            onClick={() => setRoleDropdownOpen(!roleDropdownOpen)}
-            className="flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-xl bg-slate-100/90 hover:bg-slate-200/80 border border-slate-200/80 text-xs font-medium text-slate-800 transition-colors cursor-pointer"
-          >
-            <div className="w-6 h-6 rounded-lg bg-emerald-800 text-white font-bold text-[10px] flex items-center justify-center">
-              {currentUser.avatar}
-            </div>
-            <div className="hidden sm:block text-left">
-              <span className="block font-semibold leading-tight">{currentUser.name}</span>
-              <span className="block text-[10px] text-emerald-700 leading-tight">{currentUser.role}</span>
-            </div>
-            <ChevronDown className="w-3.5 h-3.5 text-slate-500" />
-          </button>
+        {/* Quick Link to Public Front Page */}
+        <button
+          onClick={() => onNavigateTab('front-page')}
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-emerald-800 bg-emerald-50 hover:bg-emerald-100/90 border border-emerald-300/80 rounded-xl transition-all shadow-2xs cursor-pointer"
+          title="Open Public Front Page"
+        >
+          <Globe className="w-3.5 h-3.5 text-emerald-700" />
+          <span className="hidden md:inline">Public Front Page</span>
+        </button>
 
-          {roleDropdownOpen && (
-            <div className="absolute right-0 mt-2 w-64 bg-white rounded-2xl shadow-xl border border-slate-200 p-2 z-50 animate-in fade-in">
-              <div className="px-3 py-2 border-b border-slate-100">
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Switch Active Role (Demo)</span>
-                <p className="text-xs text-slate-600 mt-0.5">Test role-based permissions & privacy masking</p>
-              </div>
-
-              <div className="mt-1 space-y-1">
-                {availableUsers.map(u => (
-                  <button
-                    key={u.id}
-                    onClick={() => {
-                      switchUserRole(u.role);
-                      setRoleDropdownOpen(false);
-                    }}
-                    className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-left text-xs transition-colors cursor-pointer ${
-                      currentUser.role === u.role
-                        ? 'bg-emerald-50 text-emerald-900 font-semibold'
-                        : 'text-slate-700 hover:bg-slate-50'
-                    }`}
-                  >
-                    <div className="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold text-xs shrink-0">
-                      {u.avatar}
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <div className="truncate font-medium">{u.name}</div>
-                      <div className="text-[10px] text-slate-500">{u.role}</div>
-                    </div>
-                    {currentUser.role === u.role && (
-                      <div className="w-1.5 h-1.5 rounded-full bg-emerald-600 shrink-0" />
-                    )}
-                  </button>
-                ))}
-              </div>
-
-              <div className="mt-2 pt-2 border-t border-slate-100 px-3 py-1 flex items-center justify-between text-[11px] text-slate-400">
-                <span>Org ID: {organization?.registrationNumber || 'NGO-REG'}</span>
-                <button
-                  onClick={() => { onNavigateTab('settings'); setRoleDropdownOpen(false); }}
-                  className="text-emerald-700 font-medium hover:underline"
-                >
-                  Settings
-                </button>
-              </div>
-            </div>
-          )}
+        {/* User Profile Badge (Fixed Administrator Profile) */}
+        <div className="flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-xl bg-slate-100/90 border border-slate-200/80 text-xs font-medium text-slate-800 select-none">
+          <div className="w-6 h-6 rounded-lg bg-emerald-800 text-white font-bold text-[10px] flex items-center justify-center">
+            {currentUser.avatar}
+          </div>
+          <div className="hidden sm:block text-left">
+            <span className="block font-semibold leading-tight">{currentUser.name}</span>
+            <span className="block text-[10px] text-emerald-700 leading-tight">{currentUser.role}</span>
+          </div>
         </div>
       </div>
     </header>

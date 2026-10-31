@@ -5,6 +5,7 @@ import { Navbar } from './components/layout/Navbar';
 import { ToastContainer } from './components/common/ToastContainer';
 
 // Module Pages
+import { FrontPage } from './pages/FrontPage';
 import { DashboardPage } from './pages/DashboardPage';
 import { OrganizationPage } from './pages/OrganizationPage';
 import { ProjectsPage } from './pages/ProjectsPage';
@@ -24,12 +25,14 @@ import { SettingsPage } from './pages/SettingsPage';
 
 const AppContent: React.FC = () => {
   const { isLoading, organization } = useApp();
-  const [currentTab, setCurrentTab] = useState<string>('dashboard');
+  const [currentTab, setCurrentTab] = useState<string>('front-page');
   const [collapsed, setCollapsed] = useState<boolean>(false);
   const [mobileOpen, setMobileOpen] = useState<boolean>(false);
 
   const renderActiveTab = () => {
     switch (currentTab) {
+      case 'front-page':
+        return <FrontPage onEnterPortal={(targetTab) => setCurrentTab(targetTab || 'dashboard')} />;
       case 'dashboard':
         return <DashboardPage onNavigateTab={setCurrentTab} />;
       case 'organization':
@@ -75,6 +78,16 @@ const AppContent: React.FC = () => {
         </div>
         <h2 className="text-base font-bold font-heading text-slate-900">Loading NGO Operations Portal...</h2>
         <p className="text-xs text-slate-500 mt-1">Connecting to persistent backend & hydrating registries...</p>
+      </div>
+    );
+  }
+
+  // Full-width Public Front Page View
+  if (currentTab === 'front-page') {
+    return (
+      <div className="min-h-screen bg-[#f8faf9] text-slate-800 flex flex-col selection:bg-emerald-700 selection:text-white">
+        <FrontPage onEnterPortal={(targetTab) => setCurrentTab(targetTab || 'dashboard')} />
+        <ToastContainer />
       </div>
     );
   }

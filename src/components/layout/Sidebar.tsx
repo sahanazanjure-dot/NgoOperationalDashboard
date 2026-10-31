@@ -19,7 +19,8 @@ import {
   ChevronLeft,
   ChevronRight,
   ShieldCheck,
-  RefreshCw
+  RefreshCw,
+  Globe
 } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 
@@ -43,6 +44,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   const { organization, currentUser, smartAlerts, resetToDemo } = useApp();
 
   const navItems = [
+    { id: 'front-page', label: 'Public Front Page', icon: Globe, highlight: true },
     { id: 'dashboard', label: 'Overview Dashboard', icon: LayoutDashboard },
     { id: 'organization', label: 'Organization & Legal', icon: Building2 },
     { id: 'projects', label: 'Project Management', icon: FolderKanban },
@@ -54,7 +56,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     { id: 'inventory', label: 'Inventory & Supplies', icon: Boxes },
     { id: 'tasks', label: 'Tasks & Team Board', icon: CheckSquare },
     { id: 'reports', label: 'Reports & Statements', icon: FileSpreadsheet },
-    { id: 'import-export', label: 'Data Import & Export', icon: DownloadCloud, highlight: true },
+    { id: 'import-export', label: 'Data Import & Export', icon: DownloadCloud },
     { id: 'alerts', label: 'Smart Alerts Center', icon: BellRing, badge: smartAlerts.length },
     { id: 'data-quality', label: 'Data Quality Center', icon: Sparkles },
     { id: 'audit-logs', label: 'Audit Trail Logs', icon: History },
@@ -107,22 +109,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
             {collapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
           </button>
         </div>
-
-        {/* Current Active Role Ribbon */}
-        {!collapsed ? (
-          <div className="mx-3 my-2.5 px-3 py-2 rounded-xl bg-emerald-50/70 border border-emerald-200/60 flex items-center justify-between">
-            <div className="flex items-center gap-2 min-w-0">
-              <div className="w-2 h-2 rounded-full bg-emerald-600 animate-pulse" />
-              <div className="truncate">
-                <div className="text-[10px] uppercase font-semibold text-emerald-800 tracking-wider">Active Role</div>
-                <div className="text-xs font-semibold text-slate-900 truncate">{currentUser.role}</div>
-              </div>
-            </div>
-            <span className="text-[10px] font-mono bg-emerald-200/70 text-emerald-900 px-1.5 py-0.5 rounded font-medium">Demo</span>
-          </div>
-        ) : (
-          <div className="mx-auto my-2 w-3 h-3 rounded-full bg-emerald-600" title={`Active Role: ${currentUser.role}`} />
-        )}
 
         {/* Navigation Menu */}
         <div className="flex-1 overflow-y-auto px-3 py-2 space-y-1">
