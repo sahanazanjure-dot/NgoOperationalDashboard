@@ -70,18 +70,6 @@ const AppContent: React.FC = () => {
     }
   };
 
-  if (isLoading && !organization) {
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-[#f8faf9] text-slate-800">
-        <div className="w-12 h-12 rounded-2xl bg-emerald-800 flex items-center justify-center text-white shadow-lg animate-pulse mb-4">
-          <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
-        </div>
-        <h2 className="text-base font-bold font-heading text-slate-900">Loading NGO Operations Portal...</h2>
-        <p className="text-xs text-slate-500 mt-1">Connecting to persistent backend & hydrating registries...</p>
-      </div>
-    );
-  }
-
   // Full-width Public Front Page View
   if (currentTab === 'front-page') {
     return (

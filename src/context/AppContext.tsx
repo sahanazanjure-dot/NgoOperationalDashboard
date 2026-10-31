@@ -14,6 +14,7 @@ import {
   SmartAlert
 } from '../types';
 import { apiService } from '../services/api';
+import { fallbackData } from '../data/fallbackData';
 import confetti from 'canvas-confetti';
 
 export interface ToastMessage {
@@ -121,18 +122,18 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     { id: "USR-004", name: "Farhan Qureshi", email: "staff@hopehorizon.org", role: "Staff", title: "Field Operations & Logistics Officer", avatar: "FQ", phone: "+91 99204 77123" }
   ]);
 
-  const [organization, setOrganization] = useState<Organization | null>(null);
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [beneficiaries, setBeneficiaries] = useState<Beneficiary[]>([]);
-  const [staff, setStaff] = useState<StaffMember[]>([]);
-  const [donations, setDonations] = useState<Donation[]>([]);
-  const [expenses, setExpenses] = useState<Expense[]>([]);
-  const [events, setEvents] = useState<EventItem[]>([]);
-  const [inventory, setInventory] = useState<InventoryItem[]>([]);
-  const [tasks, setTasks] = useState<TaskItem[]>([]);
-  const [auditLogs, setAuditLogs] = useState<AuditLog[]>([]);
+  const [organization, setOrganization] = useState<Organization>(fallbackData.organization as any);
+  const [projects, setProjects] = useState<Project[]>(fallbackData.projects as any);
+  const [beneficiaries, setBeneficiaries] = useState<Beneficiary[]>(fallbackData.beneficiaries as any);
+  const [staff, setStaff] = useState<StaffMember[]>(fallbackData.staff as any);
+  const [donations, setDonations] = useState<Donation[]>(fallbackData.donations as any);
+  const [expenses, setExpenses] = useState<Expense[]>(fallbackData.expenses as any);
+  const [events, setEvents] = useState<EventItem[]>(fallbackData.events as any);
+  const [inventory, setInventory] = useState<InventoryItem[]>(fallbackData.inventory as any);
+  const [tasks, setTasks] = useState<TaskItem[]>(fallbackData.tasks as any);
+  const [auditLogs, setAuditLogs] = useState<AuditLog[]>(fallbackData.auditLogs as any);
 
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
 
   // Global filters

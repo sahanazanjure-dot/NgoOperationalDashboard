@@ -662,3 +662,4 @@ export const FrontPage: React.FC<FrontPageProps> = ({ onEnterPortal }) => {
     </div>
   );
 };
+
