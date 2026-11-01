@@ -302,7 +302,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigateTab }) =
               <DollarSign className="w-4 h-4" />
             </div>
           </div>
-          <div className="text-2xl font-bold font-heading text-slate-900">${totalDonationsReceived.toLocaleString()}</div>
+          <div className="text-2xl font-bold font-heading text-slate-900">₹{totalDonationsReceived.toLocaleString()}</div>
           <div className="flex items-center gap-1.5 mt-2 text-xs text-emerald-700 font-semibold">
             <ArrowUpRight className="w-3.5 h-3.5" />
             <span>17 Verified Grants</span>
@@ -320,7 +320,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigateTab }) =
               <Receipt className="w-4 h-4" />
             </div>
           </div>
-          <div className="text-2xl font-bold font-heading text-slate-900">${totalExpensesIncurred.toLocaleString()}</div>
+          <div className="text-2xl font-bold font-heading text-slate-900">₹{totalExpensesIncurred.toLocaleString()}</div>
           <div className="flex items-center gap-1.5 mt-2 text-xs text-rose-700">
             <ArrowDownRight className="w-3.5 h-3.5" />
             <span>89.4% Program Ratio</span>
@@ -338,7 +338,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigateTab }) =
               <Wallet className="w-4 h-4" />
             </div>
           </div>
-          <div className="text-2xl font-bold font-heading text-slate-900">${availableFunds.toLocaleString()}</div>
+          <div className="text-2xl font-bold font-heading text-slate-900">₹{availableFunds.toLocaleString()}</div>
           <div className="flex items-center gap-1.5 mt-2 text-xs text-purple-700">
             <span className="font-semibold">Healthy Liquidity Buffer</span>
           </div>
@@ -385,7 +385,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigateTab }) =
           <div className="flex items-center justify-between mb-4">
             <div>
               <h3 className="text-sm font-bold text-slate-900 font-heading">Monthly Financial Cashflow</h3>
-              <p className="text-xs text-slate-500">Donations Received vs Project Expenses ($ USD)</p>
+              <p className="text-xs text-slate-500">Donations Received vs Project Expenses (₹ INR)</p>
             </div>
             <div className="flex items-center gap-3 text-xs font-medium">
               <div className="flex items-center gap-1.5">
@@ -414,9 +414,9 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigateTab }) =
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
                 <XAxis dataKey="month" tick={{ fontSize: 11, fill: '#64748b' }} axisLine={false} tickLine={false} />
-                <YAxis tick={{ fontSize: 11, fill: '#64748b' }} axisLine={false} tickLine={false} tickFormatter={(val) => `$${val / 1000}k`} />
+                <YAxis tick={{ fontSize: 11, fill: '#64748b' }} axisLine={false} tickLine={false} tickFormatter={(val) => `₹${val / 1000}k`} />
                 <Tooltip
-                  formatter={(value: any) => [`$${Number(value).toLocaleString()}`, '']}
+                  formatter={(value: any) => [`₹${Number(value).toLocaleString()}`, '']}
                   contentStyle={{ backgroundColor: '#ffffff', borderRadius: '12px', border: '1px solid #e2e8f0', fontSize: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}
                 />
                 <Area type="monotone" dataKey="donations" stroke="#15803d" strokeWidth={2.5} fillOpacity={1} fill="url(#colorDonations)" />
@@ -513,9 +513,9 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigateTab }) =
                     </div>
                     <div className="text-slate-500 shrink-0">
                       <span className={`font-bold ${isOver ? 'text-rose-600' : 'text-slate-900'}`}>
-                        ${p.spent.toLocaleString()}
+                        ₹{p.spent.toLocaleString()}
                       </span>
-                      <span> / ${p.budget.toLocaleString()}</span>
+                      <span> / ₹{p.budget.toLocaleString()}</span>
                       <span className={`ml-2 px-1.5 py-0.5 rounded text-[10px] font-bold ${
                         isOver ? 'bg-rose-100 text-rose-700' : utilPercent > 80 ? 'bg-amber-100 text-amber-800' : 'bg-emerald-100 text-emerald-800'
                       }`}>
@@ -597,7 +597,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigateTab }) =
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-semibold text-slate-800 truncate">{d.donorName}</span>
-                    <span className="text-[11px] font-bold text-emerald-700">${d.amount.toLocaleString()}</span>
+                    <span className="text-[11px] font-bold text-emerald-700">₹{d.amount.toLocaleString()}</span>
                   </div>
                   <p className="text-[11px] text-slate-500 mt-0.5 truncate">{d.purpose} • {d.date}</p>
                 </div>
@@ -612,7 +612,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigateTab }) =
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-semibold text-slate-800 truncate">{e.vendor}</span>
-                    <span className="text-[11px] font-bold text-rose-600">${e.amount.toLocaleString()}</span>
+                    <span className="text-[11px] font-bold text-rose-600">₹{e.amount.toLocaleString()}</span>
                   </div>
                   <p className="text-[11px] text-slate-500 mt-0.5 truncate">{e.description} • {e.status}</p>
                 </div>

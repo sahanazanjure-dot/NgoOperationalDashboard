@@ -78,8 +78,8 @@ export const InventoryPage: React.FC = () => {
       'Category': i.category,
       'Quantity': i.quantity,
       'Unit': i.unit,
-      'Unit Cost ($)': i.unitCost,
-      'Total Valuation ($)': i.quantity * i.unitCost,
+      'Unit Cost (₹)': i.unitCost,
+      'Total Valuation (₹)': i.quantity * i.unitCost,
       'Location / Depot': i.location,
       'Reorder Threshold': i.reorderLevel,
       'Status': i.status,
@@ -91,8 +91,8 @@ export const InventoryPage: React.FC = () => {
       'Category': '-',
       'Quantity': 0,
       'Unit': '-',
-      'Unit Cost ($)': 0,
-      'Total Valuation ($)': totalValuation,
+      'Unit Cost (₹)': 0,
+      'Total Valuation (₹)': totalValuation,
       'Location / Depot': '-',
       'Reorder Threshold': 0,
       'Status': '-',
@@ -167,7 +167,7 @@ export const InventoryPage: React.FC = () => {
               Inventory & Critical Resources
             </h1>
             <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200">
-              ${totalValuation.toLocaleString()} Asset Value
+              ₹{totalValuation.toLocaleString()} Asset Value
             </span>
           </div>
           <p className="text-xs text-slate-500 mt-1">
@@ -201,7 +201,7 @@ export const InventoryPage: React.FC = () => {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="p-4 rounded-2xl bg-white border border-slate-200/80 shadow-2xs">
           <span className="text-xs font-medium text-slate-500">Total Asset Valuation</span>
-          <div className="text-2xl font-bold font-heading text-slate-900 mt-1">${totalValuation.toLocaleString()}</div>
+          <div className="text-2xl font-bold font-heading text-slate-900 mt-1">₹{totalValuation.toLocaleString()}</div>
           <p className="text-[11px] text-emerald-700 font-medium mt-1">Across {filteredInventory.length} Resource Lines</p>
         </div>
 
@@ -315,9 +315,9 @@ export const InventoryPage: React.FC = () => {
                 </div>
 
                 <div className="mt-3 p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-between text-xs">
-                  <span className="text-slate-500">Unit Cost: ${item.unitCost}</span>
+                  <span className="text-slate-500">Unit Cost: ₹{item.unitCost}</span>
                   <span className="font-bold text-slate-900">
-                    Total: ${(item.quantity * item.unitCost).toLocaleString()}
+                    Total: ₹{(item.quantity * item.unitCost).toLocaleString()}
                   </span>
                 </div>
               </div>
@@ -520,7 +520,7 @@ export const InventoryPage: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="font-semibold text-slate-700">Unit Cost ($)</label>
+                  <label className="font-semibold text-slate-700">Unit Cost (₹)</label>
                   <input
                     type="number"
                     min={0}

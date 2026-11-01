@@ -84,7 +84,7 @@ export const DonationsPage: React.FC = () => {
       'Receipt #': d.receiptNumber,
       'Donor Name': d.donorName,
       'Donor Type': d.donorType,
-      'Amount ($)': d.amount,
+      'Amount (₹)': d.amount,
       'Date': d.date,
       'Payment Method': d.paymentMethod,
       'Purpose': d.purpose,
@@ -97,7 +97,7 @@ export const DonationsPage: React.FC = () => {
       'Receipt #': 'TOTAL',
       'Donor Name': 'TOTAL VERIFIED DONATIONS',
       'Donor Type': '-',
-      'Amount ($)': totalRaised,
+      'Amount (₹)': totalRaised,
       'Date': '-',
       'Payment Method': '-',
       'Purpose': '-',
@@ -177,7 +177,7 @@ export const DonationsPage: React.FC = () => {
               Donations & Fundraising
             </h1>
             <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200">
-              ${totalRaised.toLocaleString()} Raised
+              ₹{totalRaised.toLocaleString()} Raised
             </span>
           </div>
           <p className="text-xs text-slate-500 mt-1">
@@ -211,14 +211,14 @@ export const DonationsPage: React.FC = () => {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="p-4 rounded-2xl bg-white border border-slate-200/80 shadow-2xs">
           <span className="text-xs font-medium text-slate-500">Filtered Donations Received</span>
-          <div className="text-2xl font-bold font-heading text-slate-900 mt-1">${totalRaised.toLocaleString()}</div>
+          <div className="text-2xl font-bold font-heading text-slate-900 mt-1">₹{totalRaised.toLocaleString()}</div>
           <p className="text-[11px] text-emerald-700 font-semibold mt-1">Across {filteredDonations.length} Contributions</p>
         </div>
 
         <div className="p-4 rounded-2xl bg-white border border-slate-200/80 shadow-2xs">
           <span className="text-xs font-medium text-slate-500">Average Contribution</span>
           <div className="text-2xl font-bold font-heading text-slate-900 mt-1">
-            ${filteredDonations.length > 0 ? Math.round(totalRaised / filteredDonations.length).toLocaleString() : 0}
+            ₹{filteredDonations.length > 0 ? Math.round(totalRaised / filteredDonations.length).toLocaleString() : 0}
           </div>
           <p className="text-[11px] text-slate-500 mt-1">Institutional & Individual Philanthropy</p>
         </div>
@@ -298,7 +298,7 @@ export const DonationsPage: React.FC = () => {
                 <th className="py-3 px-4">Donor Type</th>
                 <th className="py-3 px-4">Project Allocation</th>
                 <th className="py-3 px-4">Payment Method</th>
-                <th className="py-3 px-4">Amount ($)</th>
+                <th className="py-3 px-4">Amount (₹)</th>
                 <th className="py-3 px-4">80G Status</th>
                 <th className="py-3 px-4 text-right">Actions</th>
               </tr>
@@ -328,7 +328,7 @@ export const DonationsPage: React.FC = () => {
                   </td>
                   <td className="py-3 px-4">
                     <span className="font-bold text-sm text-emerald-800">
-                      ${donation.amount.toLocaleString()}
+                      ₹{donation.amount.toLocaleString()}
                     </span>
                   </td>
                   <td className="py-3 px-4">
@@ -444,7 +444,7 @@ export const DonationsPage: React.FC = () => {
                 </div>
                 <div className="flex items-center justify-between pt-2">
                   <span className="text-slate-600">The sum of:</span>
-                  <span className="text-xl font-bold text-emerald-900 font-heading">${receiptDonation.amount.toLocaleString()} USD</span>
+                  <span className="text-xl font-bold text-emerald-900 font-heading">₹{receiptDonation.amount.toLocaleString()} INR</span>
                 </div>
                 <div className="text-[11px] text-slate-500 pt-1">
                   <strong>Earmarked For:</strong> {receiptDonation.purpose} (Project: {receiptDonation.projectAllocation})
@@ -510,7 +510,7 @@ export const DonationsPage: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="font-semibold text-slate-700">Contribution Amount ($) *</label>
+                  <label className="font-semibold text-slate-700">Contribution Amount (₹) *</label>
                   <input
                     type="number"
                     required

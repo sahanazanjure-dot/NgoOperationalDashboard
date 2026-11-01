@@ -86,7 +86,7 @@ export const ExpensesPage: React.FC = () => {
       'Expense Voucher #': e.id,
       'Project': e.project,
       'Category': e.category,
-      'Amount ($)': e.amount,
+      'Amount (₹)': e.amount,
       'Date': e.date,
       'Vendor / Supplier': e.vendor,
       'Payment Method': e.paymentMethod,
@@ -100,7 +100,7 @@ export const ExpensesPage: React.FC = () => {
       'Expense Voucher #': 'TOTAL',
       'Project': '-',
       'Category': '-',
-      'Amount ($)': totalSpent,
+      'Amount (₹)': totalSpent,
       'Date': '-',
       'Vendor / Supplier': 'TOTAL APPROVED EXPENDITURE',
       'Payment Method': '-',
@@ -172,7 +172,7 @@ export const ExpensesPage: React.FC = () => {
               Expenses & Budget Health
             </h1>
             <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200">
-              ${totalSpent.toLocaleString()} Approved
+              ₹{totalSpent.toLocaleString()} Approved
             </span>
           </div>
           <p className="text-xs text-slate-500 mt-1">
@@ -204,13 +204,13 @@ export const ExpensesPage: React.FC = () => {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="p-4 rounded-2xl bg-white border border-slate-200/80 shadow-2xs">
           <span className="text-xs font-medium text-slate-500">Approved Disbursements</span>
-          <div className="text-2xl font-bold font-heading text-slate-900 mt-1">${totalSpent.toLocaleString()}</div>
+          <div className="text-2xl font-bold font-heading text-slate-900 mt-1">₹{totalSpent.toLocaleString()}</div>
           <p className="text-[11px] text-emerald-700 font-semibold mt-1">Legitimate programmatic expense</p>
         </div>
 
         <div className="p-4 rounded-2xl bg-white border border-slate-200/80 shadow-2xs">
           <span className="text-xs font-medium text-slate-500">Pending Review Vouchers</span>
-          <div className="text-2xl font-bold font-heading text-amber-700 mt-1">${pendingAmount.toLocaleString()}</div>
+          <div className="text-2xl font-bold font-heading text-amber-700 mt-1">₹{pendingAmount.toLocaleString()}</div>
           <p className="text-[11px] text-amber-800 font-medium mt-1">
             {expenses.filter(e => e.status === 'Pending').length} Vouchers awaiting Finance approval
           </p>
@@ -292,7 +292,7 @@ export const ExpensesPage: React.FC = () => {
                 <th className="py-3 px-4">Vendor / Payee</th>
                 <th className="py-3 px-4">Category</th>
                 <th className="py-3 px-4">Project</th>
-                <th className="py-3 px-4">Amount ($)</th>
+                <th className="py-3 px-4">Amount (₹)</th>
                 <th className="py-3 px-4">Approval Status</th>
                 <th className="py-3 px-4">Invoice / Receipt</th>
                 <th className="py-3 px-4 text-right">Workflow</th>
@@ -326,7 +326,7 @@ export const ExpensesPage: React.FC = () => {
                   </td>
                   <td className="py-3 px-4">
                     <span className="font-bold text-sm text-slate-900">
-                      ${expense.amount.toLocaleString()}
+                      ₹{expense.amount.toLocaleString()}
                     </span>
                   </td>
                   <td className="py-3 px-4">
@@ -443,7 +443,7 @@ export const ExpensesPage: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="font-semibold text-slate-700">Disbursement Amount ($) *</label>
+                  <label className="font-semibold text-slate-700">Disbursement Amount (₹) *</label>
                   <input
                     type="number"
                     required

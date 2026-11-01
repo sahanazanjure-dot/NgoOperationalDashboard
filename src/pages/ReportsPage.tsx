@@ -197,19 +197,19 @@ export const ReportsPage: React.FC = () => {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/70">
             <span className="text-[10px] font-bold text-slate-500 uppercase block">Total Funds Raised</span>
-            <span className="text-xl font-bold text-emerald-900 font-heading">${totalDonations.toLocaleString()}</span>
+            <span className="text-xl font-bold text-emerald-900 font-heading">₹{totalDonations.toLocaleString()}</span>
             <span className="text-[10px] text-slate-400 block mt-0.5">Verified Donor Receipts</span>
           </div>
 
           <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/70">
             <span className="text-[10px] font-bold text-slate-500 uppercase block">Total Disbursements</span>
-            <span className="text-xl font-bold text-rose-700 font-heading">${totalExpenses.toLocaleString()}</span>
+            <span className="text-xl font-bold text-rose-700 font-heading">₹{totalExpenses.toLocaleString()}</span>
             <span className="text-[10px] text-slate-400 block mt-0.5">Audited Programmatic Spend</span>
           </div>
 
           <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/70">
             <span className="text-[10px] font-bold text-slate-500 uppercase block">Net Available Reserve</span>
-            <span className="text-xl font-bold text-purple-900 font-heading">${(totalDonations - totalExpenses).toLocaleString()}</span>
+            <span className="text-xl font-bold text-purple-900 font-heading">₹{(totalDonations - totalExpenses).toLocaleString()}</span>
             <span className="text-[10px] text-slate-400 block mt-0.5">Liquid Operational Buffer</span>
           </div>
 
@@ -226,7 +226,7 @@ export const ReportsPage: React.FC = () => {
             <h3 className="text-sm font-bold text-slate-900 font-heading uppercase tracking-wide">
               {reportType === 'Executive' ? 'Active Projects Operational Health' : `${reportType} Detailed Records`}
             </h3>
-            <span className="text-xs text-slate-400">All amounts in USD</span>
+            <span className="text-xs text-slate-400">All amounts in INR (₹)</span>
           </div>
 
           <div className="overflow-x-auto border border-slate-200 rounded-xl">
@@ -248,8 +248,8 @@ export const ReportsPage: React.FC = () => {
                     <td className="py-2.5 px-3 font-semibold text-slate-900">{p.name}</td>
                     <td className="py-2.5 px-3">{p.category}</td>
                     <td className="py-2.5 px-3 text-slate-500">{p.location}</td>
-                    <td className="py-2.5 px-3 font-mono font-medium">${p.budget.toLocaleString()}</td>
-                    <td className="py-2.5 px-3 font-mono font-semibold">${p.spent.toLocaleString()}</td>
+                    <td className="py-2.5 px-3 font-mono font-medium">₹{p.budget.toLocaleString()}</td>
+                    <td className="py-2.5 px-3 font-mono font-semibold">₹{p.spent.toLocaleString()}</td>
                     <td className="py-2.5 px-3 font-semibold">
                       {p.budget > 0 ? `${Math.round((p.spent / p.budget) * 100)}%` : '0%'}
                     </td>

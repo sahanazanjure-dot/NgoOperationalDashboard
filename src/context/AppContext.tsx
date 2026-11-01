@@ -257,7 +257,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
           id: `alert-budget-${p.id}`,
           type: 'warning',
           title: `Budget Overrun: ${p.name}`,
-          description: `Expenditure ($${p.spent.toLocaleString()}) exceeds allocated budget ($${p.budget.toLocaleString()}).`,
+          description: `Expenditure (₹${p.spent.toLocaleString()}) exceeds allocated budget (₹${p.budget.toLocaleString()}).`,
           module: 'Projects',
           timestamp: 'Financial Alert',
           actionText: 'Inspect Budget',
@@ -274,7 +274,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         id: 'alert-exp-pending',
         type: 'warning',
         title: `${pendingExpenses.length} Expenses Awaiting Approval`,
-        description: `Total pending disbursements: $${pendingTotal.toLocaleString()}. Review and authorize vouchers.`,
+        description: `Total pending disbursements: ₹${pendingTotal.toLocaleString()}. Review and authorize vouchers.`,
         module: 'Expenses',
         timestamp: 'Audit Required',
         actionText: 'Review Vouchers',
@@ -326,7 +326,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const addProject = async (data: Partial<Project>) => {
     const created = await apiService.createProject(data, currentUser);
     setProjects(prev => [created, ...prev]);
-    addToast({ type: 'success', title: 'Project Created', message: `${created.name} initiated with $${created.budget} budget.` });
+    addToast({ type: 'success', title: 'Project Created', message: `${created.name} initiated with ₹${created.budget} budget.` });
     return created;
   };
 
@@ -384,7 +384,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     const created = await apiService.createDonation(data, currentUser);
     setDonations(prev => [created, ...prev]);
     confetti({ particleCount: 80, spread: 60, origin: { y: 0.6 } });
-    addToast({ type: 'success', title: 'Donation Recorded', message: `Donation of $${created.amount} received from ${created.donorName}. Receipt: ${created.receiptNumber}` });
+    addToast({ type: 'success', title: 'Donation Recorded', message: `Donation of ₹${created.amount} received from ${created.donorName}. Receipt: ${created.receiptNumber}` });
     return created;
   };
 
@@ -403,7 +403,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const addExpense = async (data: Partial<Expense>) => {
     const created = await apiService.createExpense(data, currentUser);
     setExpenses(prev => [created, ...prev]);
-    addToast({ type: 'success', title: 'Expense Recorded', message: `Voucher #${created.id} for $${created.amount} submitted.` });
+    addToast({ type: 'success', title: 'Expense Recorded', message: `Voucher #${created.id} for ₹${created.amount} submitted.` });
     return created;
   };
 
@@ -422,7 +422,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     addToast({
       type: status === 'Approved' ? 'success' : 'warning',
       title: `Expense ${status}`,
-      message: `Voucher #${id} ($${updated.amount}) marked as ${status}.`
+      message: `Voucher #${id} (₹${updated.amount}) marked as ${status}.`
     });
   };
 

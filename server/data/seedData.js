@@ -43,8 +43,8 @@ export const initialOrganization = {
     { id: "doc-5", title: "Annual Statutory Audit Report FY24", documentNumber: "AUD-FY24-FINAL", category: "Audit", issueDate: "2024-09-30", expiryDate: "2025-09-30", status: "Valid", issuingAuthority: "K.S. Mehta & Co. Chartered Accountants", verified: true }
   ],
   settings: {
-    currencySymbol: "$",
-    currencyCode: "USD",
+    currencySymbol: "₹",
+    currencyCode: "INR",
     fiscalYearStart: "April 01",
     receiptPrefix: "HH-REC-2024-",
     enableAutoAlerts: true,
@@ -337,8 +337,8 @@ export const initialTasks = [
 
 export const initialAuditLogs = [
   { id: "AUD-1001", timestamp: "2024-10-28T09:15:22Z", userName: "Dr. Aarti Deshmukh", userRole: "Administrator", action: "UPDATE", module: "Projects", recordId: "PRJ-101", details: "Updated project milestone: 'Install UV & dual-media filter units' marked as Completed." },
-  { id: "AUD-1002", timestamp: "2024-10-27T14:30:10Z", userName: "Pooja Hegde", userRole: "Finance Manager", action: "APPROVE", module: "Expenses", recordId: "EXP-2024-014", details: "Approved expense voucher #EXP-2024-014 ($14,500 for vocational course fees)." },
-  { id: "AUD-1003", timestamp: "2024-10-26T11:45:00Z", userName: "Pooja Hegde", userRole: "Finance Manager", action: "CREATE", module: "Donations", recordId: "DON-2024-017", details: "Recorded online donation #DON-2024-017 ($3,500 from Priya & Siddharth Roy)." },
+  { id: "AUD-1002", timestamp: "2024-10-27T14:30:10Z", userName: "Pooja Hegde", userRole: "Finance Manager", action: "APPROVE", module: "Expenses", recordId: "EXP-2024-014", details: "Approved expense voucher #EXP-2024-014 (₹14,500 for vocational course fees)." },
+  { id: "AUD-1003", timestamp: "2024-10-26T11:45:00Z", userName: "Pooja Hegde", userRole: "Finance Manager", action: "CREATE", module: "Donations", recordId: "DON-2024-017", details: "Recorded online donation #DON-2024-017 (₹3,500 from Priya & Siddharth Roy)." },
   { id: "AUD-1004", timestamp: "2024-10-25T16:20:45Z", userName: "Kavita Sen", userRole: "Project Manager", action: "CREATE", module: "Beneficiaries", recordId: "BEN-2024-022", details: "Registered new beneficiary: Baburao Ganpat Gawli (Dharavi Transit Camp)." },
   { id: "AUD-1005", timestamp: "2024-10-24T10:05:18Z", userName: "Dr. Aarti Deshmukh", userRole: "Administrator", action: "EXPORT", module: "Master Data", recordId: "GLOBAL-EXPORT", details: "Exported Consolidated NGO Master Workbook (.xlsx) with all 9 modules." },
   { id: "AUD-1006", timestamp: "2024-10-22T13:12:33Z", userName: "Captain (Retd) Arjun Nair", userRole: "Staff", action: "UPDATE", module: "Inventory", recordId: "INV-007", details: "Issued 35 tarpaulin sheets for emergency distribution; stock status changed to Low Stock." }

@@ -17,7 +17,9 @@ import {
 export const SettingsPage: React.FC = () => {
   const { organization, updateOrg, availableUsers, currentUser, switchUserRole, resetToDemo, addToast } = useApp();
 
-  const [currencySymbol, setCurrencySymbol] = useState(organization?.settings?.currencySymbol || '$');
+  const [currencySymbol, setCurrencySymbol] = useState(
+    organization?.settings?.currencySymbol === '$' ? '₹' : (organization?.settings?.currencySymbol || '₹')
+  );
   const [receiptPrefix, setReceiptPrefix] = useState(organization?.settings?.receiptPrefix || 'HH-REC-2024-');
   const [fiscalYearStart, setFiscalYearStart] = useState(organization?.settings?.fiscalYearStart || 'April 01');
   const [privacyLevel, setPrivacyLevel] = useState(organization?.settings?.privacyLevel || 'Role-Restricted');

@@ -73,8 +73,8 @@ export const ProjectsPage: React.FC = () => {
       'Category': p.category,
       'Location': p.location,
       'Manager': p.manager,
-      'Budget ($)': p.budget,
-      'Spent ($)': p.spent,
+      'Budget (₹)': p.budget,
+      'Spent (₹)': p.spent,
       'Utilization %': p.budget > 0 ? `${((p.spent / p.budget) * 100).toFixed(1)}%` : '0%',
       'Start Date': p.startDate,
       'End Date': p.endDate,
@@ -330,7 +330,7 @@ export const ProjectsPage: React.FC = () => {
                     <div className="flex items-center justify-between">
                       <span className="text-slate-500">Expenditure</span>
                       <span className={`font-semibold ${isOverBudget ? 'text-rose-600 font-bold' : 'text-slate-800'}`}>
-                        ${project.spent.toLocaleString()} / ${project.budget.toLocaleString()} ({utilPercent}%)
+                        ₹{project.spent.toLocaleString()} / ₹{project.budget.toLocaleString()} ({utilPercent}%)
                       </span>
                     </div>
                     <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
@@ -410,10 +410,10 @@ export const ProjectsPage: React.FC = () => {
                       <div>{project.manager}</div>
                       <div className="text-[10px] text-slate-400">{project.location}</div>
                     </td>
-                    <td className="py-3 px-4 font-semibold">${project.budget.toLocaleString()}</td>
+                    <td className="py-3 px-4 font-semibold">₹{project.budget.toLocaleString()}</td>
                     <td className="py-3 px-4">
                       <span className={`font-semibold ${project.spent > project.budget ? 'text-rose-600 font-bold' : 'text-slate-800'}`}>
-                        ${project.spent.toLocaleString()}
+                        ₹{project.spent.toLocaleString()}
                       </span>
                     </td>
                     <td className="py-3 px-4">
@@ -603,7 +603,7 @@ export const ProjectsPage: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="font-semibold text-slate-700">Approved Budget ($ USD) *</label>
+                  <label className="font-semibold text-slate-700">Approved Budget (₹ INR) *</label>
                   <input
                     type="number"
                     required

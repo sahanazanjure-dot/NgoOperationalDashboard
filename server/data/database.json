@@ -137,8 +137,8 @@
       }
     ],
     "settings": {
-      "currencySymbol": "$",
-      "currencyCode": "USD",
+      "currencySymbol": "₹",
+      "currencyCode": "INR",
       "fiscalYearStart": "April 01",
       "receiptPrefix": "HH-REC-2024-",
       "enableAutoAlerts": true,
@@ -2064,7 +2064,7 @@
       "action": "APPROVE",
       "module": "Expenses",
       "recordId": "EXP-2024-014",
-      "details": "Approved expense voucher #EXP-2024-014 ($14,500 for vocational course fees)."
+      "details": "Approved expense voucher #EXP-2024-014 (₹14,500 for vocational course fees)."
     },
     {
       "id": "AUD-1003",
@@ -2074,7 +2074,7 @@
       "action": "CREATE",
       "module": "Donations",
       "recordId": "DON-2024-017",
-      "details": "Recorded online donation #DON-2024-017 ($3,500 from Priya & Siddharth Roy)."
+      "details": "Recorded online donation #DON-2024-017 (₹3,500 from Priya & Siddharth Roy)."
     },
     {
       "id": "AUD-1004",

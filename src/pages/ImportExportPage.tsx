@@ -149,7 +149,7 @@ export const ImportExportPage: React.FC = () => {
 
       if (mod === 'Projects') {
         const name = row['Project Name'] || row['name'] || row['Name'];
-        const budget = row['Budget ($)'] || row['budget'] || row['Budget'];
+        const budget = row['Budget (₹)'] || row['Budget ($)'] || row['budget'] || row['Budget'];
         if (!name || String(name).trim().length < 3) {
           errs.push({ row: rowNum, error: 'Project name is required (min 3 chars)', data: row });
         }
@@ -167,14 +167,14 @@ export const ImportExportPage: React.FC = () => {
         }
       } else if (mod === 'Donations') {
         const donor = row['Donor Name'] || row['donorName'];
-        const amount = row['Amount ($)'] || row['amount'] || row['Amount'];
+        const amount = row['Amount (₹)'] || row['Amount ($)'] || row['amount'] || row['Amount'];
         if (!donor) errs.push({ row: rowNum, error: 'Donor name is required', data: row });
         if (!amount || isNaN(Number(amount)) || Number(amount) <= 0) {
           errs.push({ row: rowNum, error: 'Valid positive donation amount required', data: row });
         }
       } else if (mod === 'Expenses') {
         const vendor = row['Vendor / Supplier'] || row['vendor'] || row['Vendor'];
-        const amount = row['Amount ($)'] || row['amount'];
+        const amount = row['Amount (₹)'] || row['Amount ($)'] || row['amount'];
         if (!vendor) errs.push({ row: rowNum, error: 'Vendor name is required', data: row });
         if (!amount || isNaN(Number(amount)) || Number(amount) <= 0) {
           errs.push({ row: rowNum, error: 'Valid positive expense amount required', data: row });
@@ -211,8 +211,8 @@ export const ImportExportPage: React.FC = () => {
             objectives: row['Objectives'] || row['objectives'] || '',
             location: row['Location'] || row['location'] || 'Field Operations',
             manager: row['Manager'] || row['manager'] || staff[0]?.name || 'Dr. Aarti Deshmukh',
-            budget: Number(row['Budget ($)'] || row['budget'] || 50000),
-            spent: Number(row['Spent ($)'] || row['spent'] || 0),
+            budget: Number(row['Budget (₹)'] || row['Budget ($)'] || row['budget'] || 50000),
+            spent: Number(row['Spent (₹)'] || row['Spent ($)'] || row['spent'] || 0),
             startDate: row['Start Date'] || row['startDate'] || new Date().toISOString().split('T')[0],
             endDate: row['End Date'] || row['endDate'] || new Date(Date.now() + 180 * 24 * 3600 * 1000).toISOString().split('T')[0],
             status: row['Status'] || row['status'] || 'Active',
@@ -235,7 +235,7 @@ export const ImportExportPage: React.FC = () => {
           return {
             donorName: row['Donor Name'] || row['donorName'] || 'Anonymous Donor',
             donorType: row['Donor Type'] || row['donorType'] || 'Corporate CSR',
-            amount: Number(row['Amount ($)'] || row['amount'] || 1000),
+            amount: Number(row['Amount (₹)'] || row['Amount ($)'] || row['amount'] || 1000),
             date: row['Date'] || row['date'] || new Date().toISOString().split('T')[0],
             paymentMethod: row['Payment Method'] || row['paymentMethod'] || 'Bank Transfer',
             purpose: row['Purpose'] || row['purpose'] || 'Community program grant',
@@ -249,7 +249,7 @@ export const ImportExportPage: React.FC = () => {
             vendor: row['Vendor / Supplier'] || row['vendor'] || 'Local Supplier',
             project: row['Project'] || row['project'] || projects[0]?.id || 'PRJ-101',
             category: row['Category'] || row['category'] || 'Supplies',
-            amount: Number(row['Amount ($)'] || row['amount'] || 500),
+            amount: Number(row['Amount (₹)'] || row['Amount ($)'] || row['amount'] || 500),
             date: row['Date'] || row['date'] || new Date().toISOString().split('T')[0],
             paymentMethod: row['Payment Method'] || row['paymentMethod'] || 'Bank Transfer',
             description: row['Description'] || row['description'] || 'Batch imported operational expense',
@@ -262,7 +262,7 @@ export const ImportExportPage: React.FC = () => {
             category: row['Category'] || row['category'] || 'Water & Sanitation',
             quantity: Number(row['Quantity'] || row['quantity'] || 10),
             unit: row['Unit'] || row['unit'] || 'units',
-            unitCost: Number(row['Unit Cost ($)'] || row['unitCost'] || 20),
+            unitCost: Number(row['Unit Cost (₹)'] || row['Unit Cost ($)'] || row['unitCost'] || 20),
             location: row['Location / Depot'] || row['location'] || 'Pune Central Warehouse',
             reorderLevel: Number(row['Reorder Threshold'] || row['reorderLevel'] || 5),
             supplier: row['Supplier'] || row['supplier'] || 'Standard Supplier'

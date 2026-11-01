@@ -272,7 +272,7 @@ export const Database = {
       taxExemptionIssued: data.taxExemptionIssued ?? true
     };
     db.donations.unshift(newDonation);
-    this.logAudit(user?.name, user?.role, 'CREATE', 'Donations', id, `Recorded donation $${newDonation.amount} from ${newDonation.donorName} (${receiptNumber})`);
+    this.logAudit(user?.name, user?.role, 'CREATE', 'Donations', id, `Recorded donation ₹${newDonation.amount} from ${newDonation.donorName} (${receiptNumber})`);
     saveDB();
     return newDonation;
   },
@@ -295,7 +295,7 @@ export const Database = {
     const index = db.donations.findIndex(d => d.id === id);
     if (index === -1) return false;
     const deleted = db.donations.splice(index, 1)[0];
-    this.logAudit(user?.name, user?.role, 'DELETE', 'Donations', id, `Deleted donation entry: ${id} ($${deleted.amount})`);
+    this.logAudit(user?.name, user?.role, 'DELETE', 'Donations', id, `Deleted donation entry: ${id} (₹${deleted.amount})`);
     saveDB();
     return true;
   },
@@ -335,7 +335,7 @@ export const Database = {
       if (proj) proj.spent = (proj.spent || 0) + newExp.amount;
     }
 
-    this.logAudit(user?.name, user?.role, 'CREATE', 'Expenses', id, `Created expense voucher $${newExp.amount} for ${newExp.vendor}`);
+    this.logAudit(user?.name, user?.role, 'CREATE', 'Expenses', id, `Created expense voucher ₹${newExp.amount} for ${newExp.vendor}`);
     saveDB();
     return newExp;
   },
@@ -367,7 +367,7 @@ export const Database = {
       if (proj) proj.spent = (proj.spent || 0) + exp.amount;
     }
 
-    this.logAudit(user?.name, user?.role, status === 'Approved' ? 'APPROVE' : 'REJECT', 'Expenses', id, `${status} expense voucher #${id} ($${exp.amount})`);
+    this.logAudit(user?.name, user?.role, status === 'Approved' ? 'APPROVE' : 'REJECT', 'Expenses', id, `${status} expense voucher #${id} (₹${exp.amount})`);
     saveDB();
     return exp;
   },

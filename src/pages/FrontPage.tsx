@@ -249,7 +249,7 @@ export const FrontPage: React.FC<FrontPageProps> = ({ onEnterPortal }) => {
                 <DollarSign className="w-5 h-5 text-amber-300" />
               </div>
               <div className="text-2xl sm:text-3xl font-extrabold font-heading text-amber-950">
-                ${totalDonations.toLocaleString()}
+                ₹{totalDonations.toLocaleString()}
               </div>
               <div className="text-xs font-semibold text-slate-600 mt-1">Impact Capital Deployed</div>
               <div className="text-[10px] text-amber-700 mt-0.5">100% Tax Deductible 80G</div>
@@ -394,7 +394,7 @@ export const FrontPage: React.FC<FrontPageProps> = ({ onEnterPortal }) => {
                     <div className="space-y-2 mb-4">
                       <div className="flex items-center justify-between text-xs">
                         <span className="text-slate-600">Budget Deployed</span>
-                        <span className="font-bold text-slate-900">${(Number(proj.spent || 0)).toLocaleString()} / ${(Number(proj.budget || 0)).toLocaleString()}</span>
+                        <span className="font-bold text-slate-900">₹{(Number(proj.spent || 0)).toLocaleString()} / ₹{(Number(proj.budget || 0)).toLocaleString()}</span>
                       </div>
                       <div className="w-full h-2 rounded-full bg-slate-100 overflow-hidden">
                         <div

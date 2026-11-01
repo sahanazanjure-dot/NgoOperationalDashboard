@@ -72,8 +72,8 @@ export const EventsPage: React.FC = () => {
       'Organizer': ev.organizer,
       'Participants': ev.participantsCount,
       'Beneficiaries Reached': ev.beneficiariesReached,
-      'Budget ($)': ev.budget,
-      'Spent ($)': ev.spent,
+      'Budget (₹)': ev.budget,
+      'Spent (₹)': ev.spent,
       'Status': ev.status,
       'Outcomes': ev.outcomeSummary
     }));
@@ -290,7 +290,7 @@ export const EventsPage: React.FC = () => {
 
               <div className="flex items-center justify-between mt-5 pt-3 border-t border-slate-100 text-xs">
                 <span className="text-slate-500 font-medium">
-                  Budget: ${ev.budget.toLocaleString()} (${ev.spent.toLocaleString()} spent)
+                  Budget: ₹{ev.budget.toLocaleString()} (₹{ev.spent.toLocaleString()} spent)
                 </span>
 
                 {isAuthorized && (
@@ -440,7 +440,7 @@ export const EventsPage: React.FC = () => {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="font-semibold text-slate-700">Event Budget ($)</label>
+                  <label className="font-semibold text-slate-700">Event Budget (₹)</label>
                   <input
                     type="number"
                     min={0}
@@ -451,7 +451,7 @@ export const EventsPage: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="font-semibold text-slate-700">Actual Spent ($)</label>
+                  <label className="font-semibold text-slate-700">Actual Spent (₹)</label>
                   <input
                     type="number"
                     min={0}
