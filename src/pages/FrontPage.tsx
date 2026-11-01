@@ -394,7 +394,7 @@ export const FrontPage: React.FC<FrontPageProps> = ({ onEnterPortal }) => {
                     <div className="space-y-2 mb-4">
                       <div className="flex items-center justify-between text-xs">
                         <span className="text-slate-600">Budget Deployed</span>
-                        <span className="font-bold text-slate-900">${proj.spent.toLocaleString()} / ${proj.budget.toLocaleString()}</span>
+                        <span className="font-bold text-slate-900">${(Number(proj.spent || 0)).toLocaleString()} / ${(Number(proj.budget || 0)).toLocaleString()}</span>
                       </div>
                       <div className="w-full h-2 rounded-full bg-slate-100 overflow-hidden">
                         <div
@@ -406,7 +406,7 @@ export const FrontPage: React.FC<FrontPageProps> = ({ onEnterPortal }) => {
 
                     <div className="flex items-center justify-between text-xs text-slate-500 pt-3 border-t border-slate-100">
                       <span>Milestones: <strong>{completedMilestones}/{totalMilestones}</strong> done</span>
-                      <span>Beneficiaries: <strong>{proj.beneficiaryCount.toLocaleString()}</strong></span>
+                      <span>Beneficiaries: <strong>{(Number(proj.beneficiariesCount || (proj as any).beneficiaryCount || 0)).toLocaleString()}</strong></span>
                     </div>
                   </div>
 
