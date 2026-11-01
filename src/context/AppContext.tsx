@@ -170,26 +170,23 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     try {
       setIsLoading(true);
       const data = await apiService.fetchAllData();
-      setOrganization(data.organization);
-      setProjects(data.projects);
-      setBeneficiaries(data.beneficiaries);
-      setStaff(data.staff);
-      setDonations(data.donations);
-      setExpenses(data.expenses);
-      setEvents(data.events);
-      setInventory(data.inventory);
-      setTasks(data.tasks);
-      setAuditLogs(data.auditLogs);
-      if (data.users && data.users.length > 0) {
-        setAvailableUsers(data.users);
+      if (data) {
+        if (data.organization) setOrganization(data.organization);
+        if (Array.isArray(data.projects)) setProjects(data.projects);
+        if (Array.isArray(data.beneficiaries)) setBeneficiaries(data.beneficiaries);
+        if (Array.isArray(data.staff)) setStaff(data.staff);
+        if (Array.isArray(data.donations)) setDonations(data.donations);
+        if (Array.isArray(data.expenses)) setExpenses(data.expenses);
+        if (Array.isArray(data.events)) setEvents(data.events);
+        if (Array.isArray(data.inventory)) setInventory(data.inventory);
+        if (Array.isArray(data.tasks)) setTasks(data.tasks);
+        if (Array.isArray(data.auditLogs)) setAuditLogs(data.auditLogs);
+        if (Array.isArray(data.users) && data.users.length > 0) {
+          setAvailableUsers(data.users);
+        }
       }
     } catch (err: any) {
-      console.error('Failed to load application data:', err);
-      addToast({
-        type: 'error',
-        title: 'Connection Issue',
-        message: 'Could not connect to backend server. Operating in cached mode.'
-      });
+      console.warn('Backend unavailable, operating seamlessly in static cached mode:', err);
     } finally {
       setIsLoading(false);
     }
@@ -220,10 +217,14 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   // Rule-based Smart Alerts
   const smartAlerts = useMemo<SmartAlert[]>(() => {
     const alerts: SmartAlert[] = [];
+    const invList = inventory || [];
+    const projList = projects || [];
+    const expList = expenses || [];
+    const taskList = tasks || [];
 
     // 1. Low Inventory Alerts
-    inventory.forEach(item => {
-      if (item.quantity <= item.reorderLevel) {
+    invList.forEach(item => {
+      if (item && item.quantity <= item.reorderLevel) {
         alerts.push({
           id: `alert-inv-${item.id}`,
           type: item.quantity === 0 ? 'danger' : 'warning',
@@ -238,7 +239,8 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     });
 
     // 2. Delayed or High Utilization Projects
-    projects.forEach(p => {
+    projList.forEach(p => {
+      if (!p) return;
       if (p.status === 'Delayed') {
         alerts.push({
           id: `alert-prj-${p.id}`,
@@ -265,9 +267,9 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     });
 
     // 3. Pending Expenses needing approval
-    const pendingExpenses = expenses.filter(e => e.status === 'Pending');
+    const pendingExpenses = expList.filter(e => e && e.status === 'Pending');
     if (pendingExpenses.length > 0) {
-      const pendingTotal = pendingExpenses.reduce((s, e) => s + e.amount, 0);
+      const pendingTotal = pendingExpenses.reduce((s, e) => s + (Number(e.amount) || 0), 0);
       alerts.push({
         id: 'alert-exp-pending',
         type: 'warning',
@@ -282,7 +284,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
 
     // 4. Expiring Compliance Documents
     organization?.documents?.forEach(doc => {
-      if (doc.status === 'Expiring Soon') {
+      if (doc && doc.status === 'Expiring Soon') {
         alerts.push({
           id: `alert-doc-${doc.id}`,
           type: 'warning',
@@ -297,7 +299,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     });
 
     // 5. Overdue / Urgent Tasks
-    const urgentTasks = tasks.filter(t => t.priority === 'Urgent' && t.status !== 'Completed');
+    const urgentTasks = taskList.filter(t => t && t.priority === 'Urgent' && t.status !== 'Completed');
     if (urgentTasks.length > 0) {
       alerts.push({
         id: 'alert-urgent-tasks',

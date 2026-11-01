@@ -39,10 +39,16 @@ export const FrontPage: React.FC<FrontPageProps> = ({ onEnterPortal }) => {
     events
   } = useApp();
 
-  const totalDonations = donations.reduce((sum, d) => sum + (Number(d.amount) || 0), 0);
-  const totalBeneficiaries = beneficiaries.length > 0 ? (beneficiaries.length * 150 + 18420) : 18420;
-  const activeProjectsCount = projects.filter(p => p.status === 'Active').length || projects.length;
-  const staffCount = staff.length || 32;
+  const donationsList = donations || [];
+  const projectsList = projects || [];
+  const beneficiariesList = beneficiaries || [];
+  const staffList = staff || [];
+  const eventsList = events || [];
+
+  const totalDonations = donationsList.reduce((sum, d) => sum + (Number(d?.amount) || 0), 0);
+  const totalBeneficiaries = beneficiariesList.length > 0 ? (beneficiariesList.length * 150 + 18420) : 18420;
+  const activeProjectsCount = projectsList.filter(p => p?.status === 'Active').length || projectsList.length;
+  const staffCount = staffList.length || 32;
 
   const programPillars = [
     {
@@ -356,7 +362,8 @@ export const FrontPage: React.FC<FrontPageProps> = ({ onEnterPortal }) => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {projects.slice(0, 3).map(proj => {
+            {projectsList.slice(0, 3).map(proj => {
+              if (!proj) return null;
               const burnRate = proj.budget > 0 ? Math.min(100, Math.round((proj.spent / proj.budget) * 100)) : 0;
               const completedMilestones = proj.milestones ? proj.milestones.filter(m => m.completed).length : 0;
               const totalMilestones = proj.milestones ? proj.milestones.length : 0;
@@ -510,7 +517,9 @@ export const FrontPage: React.FC<FrontPageProps> = ({ onEnterPortal }) => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {events.slice(0, 3).map(ev => (
+            {eventsList.slice(0, 3).map(ev => {
+              if (!ev) return null;
+              return (
               <div key={ev.id} className="p-6 rounded-2xl bg-white border border-slate-200/80 shadow-xs flex flex-col justify-between">
                 <div>
                   <div className="flex items-center justify-between mb-3 text-xs">
@@ -541,7 +550,8 @@ export const FrontPage: React.FC<FrontPageProps> = ({ onEnterPortal }) => {
                   </button>
                 </div>
               </div>
-            ))}
+            );
+          })}
           </div>
         </div>
       </section>
