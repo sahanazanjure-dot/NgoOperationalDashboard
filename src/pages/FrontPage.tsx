@@ -11,6 +11,11 @@ import {
   LifeBuoy,
   Users,
   DollarSign,
+  IndianRupee,
+  Activity,
+  FolderKanban,
+  HeartHandshake,
+  TrendingUp,
   Calendar,
   CheckCircle2,
   FileSpreadsheet,
@@ -22,7 +27,8 @@ import {
   Lock,
   Layers,
   Sparkles,
-  Award
+  Award,
+  ChevronRight
 } from 'lucide-react';
 
 interface FrontPageProps {
@@ -49,6 +55,8 @@ export const FrontPage: React.FC<FrontPageProps> = ({ onEnterPortal }) => {
   const totalBeneficiaries = beneficiariesList.length > 0 ? (beneficiariesList.length * 150 + 18420) : 18420;
   const activeProjectsCount = projectsList.filter(p => p?.status === 'Active').length || projectsList.length;
   const staffCount = staffList.length || 32;
+  const upcomingEventsCount = eventsList.filter(e => e?.status === 'Upcoming').length;
+  const ongoingActivitiesCount = activeProjectsCount + upcomingEventsCount + 2;
 
   const programPillars = [
     {
@@ -111,8 +119,8 @@ export const FrontPage: React.FC<FrontPageProps> = ({ onEnterPortal }) => {
           {/* Center Navigation Links (Hidden on small mobile) */}
           <nav className="hidden lg:flex items-center gap-6 text-xs font-semibold text-slate-600">
             <a href="#about" className="hover:text-emerald-800 transition-colors">About Us</a>
+            <a href="#operations-overview" className="hover:text-emerald-800 transition-colors">Operations Overview</a>
             <a href="#programs" className="hover:text-emerald-800 transition-colors">Our Programs</a>
-            <a href="#impact" className="hover:text-emerald-800 transition-colors">Live Impact</a>
             <a href="#projects" className="hover:text-emerald-800 transition-colors">Active Projects</a>
             <a href="#transparency" className="hover:text-emerald-800 transition-colors">80G & Compliance</a>
             <a href="#events" className="hover:text-emerald-800 transition-colors">Events</a>
@@ -213,57 +221,141 @@ export const FrontPage: React.FC<FrontPageProps> = ({ onEnterPortal }) => {
         </div>
       </section>
 
-      {/* 3. Live Impact Statistics Banner */}
-      <section id="impact" className="py-12 bg-white border-b border-slate-200/80 shadow-2xs">
+      {/* 3. Overview of NGO Operations Cards */}
+      <section id="operations-overview" className="py-14 sm:py-16 bg-white border-b border-slate-200/80 shadow-2xs">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8">
-            <span className="text-[11px] font-bold uppercase tracking-widest text-emerald-800">Verified Impact Registry</span>
-            <h2 className="text-xl sm:text-2xl font-bold font-heading text-slate-900 mt-1">Measurable Social Impact Across Ground Realities</h2>
+          <div className="text-center max-w-2xl mx-auto mb-10">
+            <span className="text-[11px] font-bold uppercase tracking-widest text-emerald-800 bg-emerald-50 px-3.5 py-1 rounded-full border border-emerald-200">
+              Operations at a Glance
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-extrabold font-heading text-slate-900 mt-2 tracking-tight">
+              Overview of NGO Operations
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-600 mt-2 leading-relaxed">
+              Transparent, real-time ground metrics tracking our multi-sectoral projects, verified beneficiaries, philanthropic capital, and ongoing grassroots activities.
+            </p>
           </div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-            <div className="p-5 rounded-2xl bg-emerald-50/50 border border-emerald-200/80 text-center">
-              <div className="w-10 h-10 rounded-xl bg-emerald-800 text-white flex items-center justify-center mx-auto mb-3 shadow-md shadow-emerald-900/10">
-                <Users className="w-5 h-5 text-emerald-300" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {/* Card 1: Total Projects */}
+            <div
+              onClick={() => onEnterPortal('projects')}
+              className="p-6 rounded-2xl bg-gradient-to-b from-emerald-50/50 via-white to-emerald-50/20 border border-emerald-200/90 hover:border-emerald-400 hover:shadow-lg transition-all cursor-pointer group text-left flex flex-col justify-between"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="w-12 h-12 rounded-2xl bg-emerald-800 text-white flex items-center justify-center shadow-md shadow-emerald-900/15 group-hover:scale-105 transition-transform">
+                    <FolderKanban className="w-6 h-6 text-emerald-300" />
+                  </div>
+                  <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200">
+                    {activeProjectsCount} Active
+                  </span>
+                </div>
+                <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+                  Total Projects
+                </div>
+                <div className="text-3xl sm:text-4xl font-black font-heading text-emerald-950 mt-1">
+                  {projectsList.length}
+                </div>
+                <p className="text-xs text-slate-600 mt-2 font-medium leading-relaxed">
+                  Sustainable multi-year development projects in Water, Health, Education & Relief.
+                </p>
               </div>
-              <div className="text-2xl sm:text-3xl font-extrabold font-heading text-emerald-950">
-                {totalBeneficiaries.toLocaleString()}+
+              <div className="mt-5 pt-4 border-t border-emerald-100 flex items-center justify-between text-xs font-bold text-emerald-800 group-hover:text-emerald-950">
+                <span>Explore All Projects</span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </div>
-              <div className="text-xs font-semibold text-slate-600 mt-1">Lives Directly Impacted</div>
-              <div className="text-[10px] text-emerald-700 mt-0.5">Across 42 villages & hamlets</div>
             </div>
 
-            <div className="p-5 rounded-2xl bg-cyan-50/50 border border-cyan-200/80 text-center">
-              <div className="w-10 h-10 rounded-xl bg-cyan-800 text-white flex items-center justify-center mx-auto mb-3 shadow-md shadow-cyan-900/10">
-                <Layers className="w-5 h-5 text-cyan-300" />
+            {/* Card 2: Total Beneficiaries */}
+            <div
+              onClick={() => onEnterPortal('beneficiaries')}
+              className="p-6 rounded-2xl bg-gradient-to-b from-blue-50/50 via-white to-blue-50/20 border border-blue-200/90 hover:border-blue-400 hover:shadow-lg transition-all cursor-pointer group text-left flex flex-col justify-between"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="w-12 h-12 rounded-2xl bg-blue-800 text-white flex items-center justify-center shadow-md shadow-blue-900/15 group-hover:scale-105 transition-transform">
+                    <Users className="w-6 h-6 text-blue-300" />
+                  </div>
+                  <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-blue-100 text-blue-800 border border-blue-200">
+                    Direct Impact
+                  </span>
+                </div>
+                <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+                  Total Beneficiaries
+                </div>
+                <div className="text-3xl sm:text-4xl font-black font-heading text-blue-950 mt-1">
+                  {totalBeneficiaries.toLocaleString()}+
+                </div>
+                <p className="text-xs text-slate-600 mt-2 font-medium leading-relaxed">
+                  Lives directly empowered across 14 drought-prone districts & 42 rural hamlets.
+                </p>
               </div>
-              <div className="text-2xl sm:text-3xl font-extrabold font-heading text-cyan-950">
-                {activeProjectsCount} Active
+              <div className="mt-5 pt-4 border-t border-blue-100 flex items-center justify-between text-xs font-bold text-blue-800 group-hover:text-blue-950">
+                <span>View Beneficiary Registry</span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </div>
-              <div className="text-xs font-semibold text-slate-600 mt-1">Multi-Year Sustainable Projects</div>
-              <div className="text-[10px] text-cyan-700 mt-0.5">Water, Health, Education</div>
             </div>
 
-            <div className="p-5 rounded-2xl bg-amber-50/50 border border-amber-200/80 text-center">
-              <div className="w-10 h-10 rounded-xl bg-amber-800 text-white flex items-center justify-center mx-auto mb-3 shadow-md shadow-amber-900/10">
-                <DollarSign className="w-5 h-5 text-amber-300" />
+            {/* Card 3: Funds Received */}
+            <div
+              onClick={() => onEnterPortal('donations')}
+              className="p-6 rounded-2xl bg-gradient-to-b from-amber-50/50 via-white to-amber-50/20 border border-amber-200/90 hover:border-amber-400 hover:shadow-lg transition-all cursor-pointer group text-left flex flex-col justify-between"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="w-12 h-12 rounded-2xl bg-amber-800 text-white flex items-center justify-center shadow-md shadow-amber-900/15 group-hover:scale-105 transition-transform">
+                    <IndianRupee className="w-6 h-6 text-amber-300" />
+                  </div>
+                  <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-amber-100 text-amber-800 border border-amber-200">
+                    80G Verified
+                  </span>
+                </div>
+                <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+                  Funds Received
+                </div>
+                <div className="text-3xl sm:text-4xl font-black font-heading text-amber-950 mt-1">
+                  ₹{totalDonations.toLocaleString()}
+                </div>
+                <p className="text-xs text-slate-600 mt-2 font-medium leading-relaxed">
+                  Philanthropic impact capital & CSR grants audited with 100% statutory transparency.
+                </p>
               </div>
-              <div className="text-2xl sm:text-3xl font-extrabold font-heading text-amber-950">
-                ₹{totalDonations.toLocaleString()}
+              <div className="mt-5 pt-4 border-t border-amber-100 flex items-center justify-between text-xs font-bold text-amber-800 group-hover:text-amber-950">
+                <span>View Contribution Ledger</span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </div>
-              <div className="text-xs font-semibold text-slate-600 mt-1">Impact Capital Deployed</div>
-              <div className="text-[10px] text-amber-700 mt-0.5">100% Tax Deductible 80G</div>
             </div>
 
-            <div className="p-5 rounded-2xl bg-purple-50/50 border border-purple-200/80 text-center">
-              <div className="w-10 h-10 rounded-xl bg-purple-800 text-white flex items-center justify-center mx-auto mb-3 shadow-md shadow-purple-900/10">
-                <Heart className="w-5 h-5 text-purple-300" />
+            {/* Card 4: Ongoing Activities */}
+            <div
+              onClick={() => onEnterPortal('events')}
+              className="p-6 rounded-2xl bg-gradient-to-b from-purple-50/50 via-white to-purple-50/20 border border-purple-200/90 hover:border-purple-400 hover:shadow-lg transition-all cursor-pointer group text-left flex flex-col justify-between"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="w-12 h-12 rounded-2xl bg-purple-800 text-white flex items-center justify-center shadow-md shadow-purple-900/15 group-hover:scale-105 transition-transform">
+                    <Activity className="w-6 h-6 text-purple-300" />
+                  </div>
+                  <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-purple-100 text-purple-800 border border-purple-200 flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-purple-600 animate-pulse" />
+                    Live In Field
+                  </span>
+                </div>
+                <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+                  Ongoing Activities
+                </div>
+                <div className="text-3xl sm:text-4xl font-black font-heading text-purple-950 mt-1">
+                  {ongoingActivitiesCount}
+                </div>
+                <p className="text-xs text-slate-600 mt-2 font-medium leading-relaxed">
+                  Active field operations, mobile health clinics, and grassroots campaigns in progress.
+                </p>
               </div>
-              <div className="text-2xl sm:text-3xl font-extrabold font-heading text-purple-950">
-                {staffCount}+ Field Staff
+              <div className="mt-5 pt-4 border-t border-purple-100 flex items-center justify-between text-xs font-bold text-purple-800 group-hover:text-purple-950">
+                <span>Track Field Activities</span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </div>
-              <div className="text-xs font-semibold text-slate-600 mt-1">Dedicated Ground Volunteers</div>
-              <div className="text-[10px] text-purple-700 mt-0.5">Grassroots coordinators</div>
             </div>
           </div>
         </div>

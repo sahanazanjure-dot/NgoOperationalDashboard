@@ -6,6 +6,8 @@ import {
   Users,
   HeartHandshake,
   DollarSign,
+  IndianRupee,
+  Activity,
   TrendingUp,
   Receipt,
   Wallet,
@@ -113,12 +115,17 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigateTab }) =
   // KPI Calculations
   const totalProjectsCount = filteredProjects.length;
   const activeProjectsCount = filteredProjects.filter(p => p.status === 'Active').length;
+  const completedProjectsCount = filteredProjects.filter(p => p.status === 'Completed').length;
+  const planningProjectsCount = filteredProjects.filter(p => p.status === 'Planning').length;
+  const delayedProjectsCount = filteredProjects.filter(p => p.status === 'Delayed').length;
   const totalBeneficiariesCount = filteredProjects.reduce((sum, p) => sum + p.beneficiariesCount, 0);
   const totalVolunteersStaffCount = staff.filter(s => s.status === 'Active').length;
   const totalDonationsReceived = filteredDonations.reduce((sum, d) => sum + (d.status === 'Verified' ? d.amount : 0), 0);
   const totalExpensesIncurred = filteredExpenses.reduce((sum, e) => sum + (e.status === 'Approved' ? e.amount : 0), 0);
   const availableFunds = totalDonationsReceived - totalExpensesIncurred;
   const upcomingEventsCount = events.filter(e => e.status === 'Upcoming').length;
+  const activeTasksCount = tasks.filter(t => t.status === 'In Progress' || t.status === 'Pending').length;
+  const totalOngoingActivities = activeProjectsCount + upcomingEventsCount + activeTasksCount;
 
   // Chart Data: Monthly Cashflow (Donations vs Expenses)
   const cashflowData = [
@@ -236,145 +243,222 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigateTab }) =
         </div>
       )}
 
-      {/* 8 Primary KPI Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {/* 1. Total Projects */}
-        <div
-          onClick={() => onNavigateTab('projects')}
-          className="p-4 rounded-2xl bg-white border border-slate-200/80 shadow-2xs hover:shadow-md transition-all cursor-pointer group"
-        >
-          <div className="flex items-center justify-between text-slate-500 mb-2">
-            <span className="text-xs font-medium text-slate-600">Total Projects</span>
-            <div className="p-2 rounded-xl bg-emerald-50 text-emerald-800 group-hover:scale-110 transition-transform">
-              <FolderKanban className="w-4 h-4" />
+      {/* NGO Operations Overview Header & 4 Hero Cards */}
+      <div className="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200/90 shadow-2xs space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-100">
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
+              <h2 className="text-base sm:text-lg font-bold text-slate-900 font-heading tracking-tight">
+                NGO Operations Overview
+              </h2>
             </div>
+            <p className="text-xs text-slate-500 mt-0.5">
+              Live operational command center tracking active projects, registered beneficiaries, philanthropic capital, and ground initiatives.
+            </p>
           </div>
-          <div className="text-2xl font-bold font-heading text-slate-900">{totalProjectsCount}</div>
-          <div className="flex items-center gap-1.5 mt-2 text-xs text-emerald-700">
-            <CheckCircle2 className="w-3.5 h-3.5" />
-            <span className="font-semibold">{activeProjectsCount} Active Initiatives</span>
-          </div>
+          <span className="text-[11px] font-semibold text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200 self-start sm:self-auto flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-600" />
+            Live Central Operations
+          </span>
         </div>
 
-        {/* 2. Beneficiaries Served */}
-        <div
-          onClick={() => onNavigateTab('beneficiaries')}
-          className="p-4 rounded-2xl bg-white border border-slate-200/80 shadow-2xs hover:shadow-md transition-all cursor-pointer group"
-        >
-          <div className="flex items-center justify-between text-slate-500 mb-2">
-            <span className="text-xs font-medium text-slate-600">Total Beneficiaries</span>
-            <div className="p-2 rounded-xl bg-blue-50 text-blue-700 group-hover:scale-110 transition-transform">
-              <HeartHandshake className="w-4 h-4" />
+        {/* The 4 Clear Overview Cards for NGO Operations */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {/* Card 1: Total Projects */}
+          <div
+            onClick={() => onNavigateTab('projects')}
+            className="p-5 rounded-xl bg-gradient-to-b from-white via-slate-50/40 to-emerald-50/20 border border-slate-200/90 hover:border-emerald-400 hover:shadow-md transition-all cursor-pointer group flex flex-col justify-between"
+          >
+            <div>
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+                  Total Projects
+                </span>
+                <div className="p-2.5 rounded-xl bg-emerald-100/70 text-emerald-800 group-hover:bg-emerald-700 group-hover:text-white transition-all shadow-xs">
+                  <FolderKanban className="w-4 h-4" />
+                </div>
+              </div>
+              <div className="text-3xl font-extrabold font-heading text-slate-900 tracking-tight">
+                {totalProjectsCount}
+              </div>
+              <div className="flex items-center gap-1.5 mt-2 text-xs text-emerald-700 font-semibold">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                <span>{activeProjectsCount} Active On-Ground</span>
+              </div>
+              <p className="text-[11px] text-slate-500 mt-1.5">
+                {completedProjectsCount} Completed • {planningProjectsCount} Planning
+              </p>
+            </div>
+            <div className="pt-3 mt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-emerald-800 group-hover:text-emerald-900">
+              <span>Explore Projects</span>
+              <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </div>
           </div>
-          <div className="text-2xl font-bold font-heading text-slate-900">{totalBeneficiariesCount.toLocaleString()}</div>
-          <div className="flex items-center gap-1.5 mt-2 text-xs text-blue-700">
-            <TrendingUp className="w-3.5 h-3.5" />
-            <span className="font-semibold">Across 14 Districts</span>
+
+          {/* Card 2: Total Beneficiaries */}
+          <div
+            onClick={() => onNavigateTab('beneficiaries')}
+            className="p-5 rounded-xl bg-gradient-to-b from-white via-slate-50/40 to-blue-50/20 border border-slate-200/90 hover:border-blue-400 hover:shadow-md transition-all cursor-pointer group flex flex-col justify-between"
+          >
+            <div>
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+                  Total Beneficiaries
+                </span>
+                <div className="p-2.5 rounded-xl bg-blue-100/70 text-blue-800 group-hover:bg-blue-700 group-hover:text-white transition-all shadow-xs">
+                  <HeartHandshake className="w-4 h-4" />
+                </div>
+              </div>
+              <div className="text-3xl font-extrabold font-heading text-slate-900 tracking-tight">
+                {totalBeneficiariesCount.toLocaleString()}+
+              </div>
+              <div className="flex items-center gap-1.5 mt-2 text-xs text-blue-700 font-semibold">
+                <TrendingUp className="w-3.5 h-3.5 text-blue-600" />
+                <span>Verified Field Reach</span>
+              </div>
+              <p className="text-[11px] text-slate-500 mt-1.5">
+                Across 14 Districts & 42 Rural Hamlets
+              </p>
+            </div>
+            <div className="pt-3 mt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-blue-800 group-hover:text-blue-900">
+              <span>Beneficiary Registry</span>
+              <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </div>
+
+          {/* Card 3: Funds Received */}
+          <div
+            onClick={() => onNavigateTab('donations')}
+            className="p-5 rounded-xl bg-gradient-to-b from-white via-slate-50/40 to-amber-50/20 border border-slate-200/90 hover:border-amber-400 hover:shadow-md transition-all cursor-pointer group flex flex-col justify-between"
+          >
+            <div>
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+                  Funds Received
+                </span>
+                <div className="p-2.5 rounded-xl bg-amber-100/70 text-amber-800 group-hover:bg-amber-700 group-hover:text-white transition-all shadow-xs">
+                  <IndianRupee className="w-4 h-4" />
+                </div>
+              </div>
+              <div className="text-3xl font-extrabold font-heading text-slate-900 tracking-tight">
+                ₹{totalDonationsReceived.toLocaleString()}
+              </div>
+              <div className="flex items-center gap-1.5 mt-2 text-xs text-emerald-700 font-semibold">
+                <ArrowUpRight className="w-3.5 h-3.5 text-emerald-600" />
+                <span>{filteredDonations.length} Verified Grants</span>
+              </div>
+              <p className="text-[11px] text-slate-500 mt-1.5">
+                100% Tax-Exempt Section 80G Compliant
+              </p>
+            </div>
+            <div className="pt-3 mt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-amber-800 group-hover:text-amber-900">
+              <span>Donation Ledger</span>
+              <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </div>
+
+          {/* Card 4: Ongoing Activities */}
+          <div
+            onClick={() => onNavigateTab('events')}
+            className="p-5 rounded-xl bg-gradient-to-b from-white via-slate-50/40 to-purple-50/20 border border-slate-200/90 hover:border-purple-400 hover:shadow-md transition-all cursor-pointer group flex flex-col justify-between"
+          >
+            <div>
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+                  Ongoing Activities
+                </span>
+                <div className="p-2.5 rounded-xl bg-purple-100/70 text-purple-800 group-hover:bg-purple-700 group-hover:text-white transition-all shadow-xs">
+                  <Activity className="w-4 h-4" />
+                </div>
+              </div>
+              <div className="text-3xl font-extrabold font-heading text-slate-900 tracking-tight">
+                {totalOngoingActivities}
+              </div>
+              <div className="flex items-center gap-1.5 mt-2 text-xs text-purple-700 font-semibold">
+                <span className="w-2 h-2 rounded-full bg-purple-600 animate-pulse" />
+                <span>Active Ground Operations</span>
+              </div>
+              <p className="text-[11px] text-slate-500 mt-1.5">
+                {activeProjectsCount} Projects • {upcomingEventsCount} Drives • {activeTasksCount} Tasks
+              </p>
+            </div>
+            <div className="pt-3 mt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-purple-800 group-hover:text-purple-900">
+              <span>Activity Calendar</span>
+              <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </div>
           </div>
         </div>
+      </div>
 
-        {/* 3. Volunteers & Staff */}
+      {/* Secondary Operational Health Indicators Strip */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        {/* Total Expenses Incurred */}
+        <div
+          onClick={() => onNavigateTab('expenses')}
+          className="p-4 rounded-2xl bg-white border border-slate-200/80 shadow-2xs hover:shadow-md transition-all cursor-pointer"
+        >
+          <div className="flex items-center justify-between text-slate-500 mb-1">
+            <span className="text-xs font-medium text-slate-600">Disbursements (Spend)</span>
+            <div className="p-1.5 rounded-lg bg-rose-50 text-rose-700">
+              <Receipt className="w-3.5 h-3.5" />
+            </div>
+          </div>
+          <div className="text-xl font-bold font-heading text-slate-900">
+            ₹{totalExpensesIncurred.toLocaleString()}
+          </div>
+          <span className="text-[11px] text-rose-600 font-medium">89.4% Direct Program Spend</span>
+        </div>
+
+        {/* Available Reserves */}
+        <div
+          onClick={() => onNavigateTab('expenses')}
+          className="p-4 rounded-2xl bg-white border border-slate-200/80 shadow-2xs hover:shadow-md transition-all cursor-pointer"
+        >
+          <div className="flex items-center justify-between text-slate-500 mb-1">
+            <span className="text-xs font-medium text-slate-600">Available Reserves</span>
+            <div className="p-1.5 rounded-lg bg-teal-50 text-teal-700">
+              <Wallet className="w-3.5 h-3.5" />
+            </div>
+          </div>
+          <div className="text-xl font-bold font-heading text-slate-900">
+            ₹{availableFunds.toLocaleString()}
+          </div>
+          <span className="text-[11px] text-teal-700 font-medium">Liquid Operational Buffer</span>
+        </div>
+
+        {/* Volunteers & Staff */}
         <div
           onClick={() => onNavigateTab('staff')}
-          className="p-4 rounded-2xl bg-white border border-slate-200/80 shadow-2xs hover:shadow-md transition-all cursor-pointer group"
+          className="p-4 rounded-2xl bg-white border border-slate-200/80 shadow-2xs hover:shadow-md transition-all cursor-pointer"
         >
-          <div className="flex items-center justify-between text-slate-500 mb-2">
+          <div className="flex items-center justify-between text-slate-500 mb-1">
             <span className="text-xs font-medium text-slate-600">Staff & Volunteers</span>
-            <div className="p-2 rounded-xl bg-teal-50 text-teal-800 group-hover:scale-110 transition-transform">
-              <Users className="w-4 h-4" />
+            <div className="p-1.5 rounded-lg bg-blue-50 text-blue-700">
+              <Users className="w-3.5 h-3.5" />
             </div>
           </div>
-          <div className="text-2xl font-bold font-heading text-slate-900">{totalVolunteersStaffCount}</div>
-          <div className="flex items-center gap-1.5 mt-2 text-xs text-teal-700">
-            <span className="font-medium">1,120+ Volunteer Hours Logged</span>
+          <div className="text-xl font-bold font-heading text-slate-900">
+            {totalVolunteersStaffCount} Active
           </div>
+          <span className="text-[11px] text-blue-700 font-medium">1,120+ Volunteer Hours Logged</span>
         </div>
 
-        {/* 4. Total Donations Received */}
-        <div
-          onClick={() => onNavigateTab('donations')}
-          className="p-4 rounded-2xl bg-white border border-slate-200/80 shadow-2xs hover:shadow-md transition-all cursor-pointer group"
-        >
-          <div className="flex items-center justify-between text-slate-500 mb-2">
-            <span className="text-xs font-medium text-slate-600">Donations Received</span>
-            <div className="p-2 rounded-xl bg-emerald-50 text-emerald-800 group-hover:scale-110 transition-transform">
-              <DollarSign className="w-4 h-4" />
-            </div>
-          </div>
-          <div className="text-2xl font-bold font-heading text-slate-900">₹{totalDonationsReceived.toLocaleString()}</div>
-          <div className="flex items-center gap-1.5 mt-2 text-xs text-emerald-700 font-semibold">
-            <ArrowUpRight className="w-3.5 h-3.5" />
-            <span>17 Verified Grants</span>
-          </div>
-        </div>
-
-        {/* 5. Total Expenses */}
-        <div
-          onClick={() => onNavigateTab('expenses')}
-          className="p-4 rounded-2xl bg-white border border-slate-200/80 shadow-2xs hover:shadow-md transition-all cursor-pointer group"
-        >
-          <div className="flex items-center justify-between text-slate-500 mb-2">
-            <span className="text-xs font-medium text-slate-600">Total Expenses</span>
-            <div className="p-2 rounded-xl bg-rose-50 text-rose-700 group-hover:scale-110 transition-transform">
-              <Receipt className="w-4 h-4" />
-            </div>
-          </div>
-          <div className="text-2xl font-bold font-heading text-slate-900">₹{totalExpensesIncurred.toLocaleString()}</div>
-          <div className="flex items-center gap-1.5 mt-2 text-xs text-rose-700">
-            <ArrowDownRight className="w-3.5 h-3.5" />
-            <span>89.4% Program Ratio</span>
-          </div>
-        </div>
-
-        {/* 6. Available Funds */}
-        <div
-          onClick={() => onNavigateTab('expenses')}
-          className="p-4 rounded-2xl bg-white border border-slate-200/80 shadow-2xs hover:shadow-md transition-all cursor-pointer group"
-        >
-          <div className="flex items-center justify-between text-slate-500 mb-2">
-            <span className="text-xs font-medium text-slate-600">Available Reserves</span>
-            <div className="p-2 rounded-xl bg-purple-50 text-purple-700 group-hover:scale-110 transition-transform">
-              <Wallet className="w-4 h-4" />
-            </div>
-          </div>
-          <div className="text-2xl font-bold font-heading text-slate-900">₹{availableFunds.toLocaleString()}</div>
-          <div className="flex items-center gap-1.5 mt-2 text-xs text-purple-700">
-            <span className="font-semibold">Healthy Liquidity Buffer</span>
-          </div>
-        </div>
-
-        {/* 7. Upcoming Events */}
-        <div
-          onClick={() => onNavigateTab('events')}
-          className="p-4 rounded-2xl bg-white border border-slate-200/80 shadow-2xs hover:shadow-md transition-all cursor-pointer group"
-        >
-          <div className="flex items-center justify-between text-slate-500 mb-2">
-            <span className="text-xs font-medium text-slate-600">Upcoming Events</span>
-            <div className="p-2 rounded-xl bg-amber-50 text-amber-700 group-hover:scale-110 transition-transform">
-              <Calendar className="w-4 h-4" />
-            </div>
-          </div>
-          <div className="text-2xl font-bold font-heading text-slate-900">{upcomingEventsCount}</div>
-          <div className="flex items-center gap-1.5 mt-2 text-xs text-amber-700">
-            <span>2 Campaigns this month</span>
-          </div>
-        </div>
-
-        {/* 8. NGO Impact Score */}
+        {/* Impact Transparency Rating */}
         <div
           onClick={() => onNavigateTab('reports')}
-          className="p-4 rounded-2xl bg-gradient-to-br from-emerald-900 to-slate-900 text-white shadow-md shadow-emerald-950/20 hover:shadow-lg transition-all cursor-pointer group"
+          className="p-4 rounded-2xl bg-white border border-slate-200/80 shadow-2xs hover:shadow-md transition-all cursor-pointer"
         >
-          <div className="flex items-center justify-between text-emerald-300 mb-2">
-            <span className="text-xs font-medium text-emerald-200">Social Impact Rating</span>
-            <Award className="w-4 h-4 text-emerald-400 group-hover:rotate-12 transition-transform" />
+          <div className="flex items-center justify-between text-slate-500 mb-1">
+            <span className="text-xs font-medium text-slate-600">Social Impact Rating</span>
+            <div className="p-1.5 rounded-lg bg-emerald-50 text-emerald-700">
+              <Award className="w-3.5 h-3.5" />
+            </div>
           </div>
-          <div className="text-2xl font-bold font-heading text-white">96.8 / 100</div>
-          <div className="flex items-center gap-1.5 mt-2 text-xs text-emerald-300 font-medium">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>High Transparency Index</span>
+          <div className="text-xl font-bold font-heading text-slate-900">
+            96.8 / 100
           </div>
+          <span className="text-[11px] text-emerald-700 font-medium">Highest Trust Score</span>
         </div>
       </div>
 
